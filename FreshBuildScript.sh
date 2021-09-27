@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Variables Start
+
+# OS Name
+os=$(lsb_release -i | cut -f 2-)
+# Username
+username=$(id -u -n)
+# PWD
+path=${PWD}
+
+# svn credentials
+uname=aquib.ahmed
+pwd=Aahlaad!23
+
+# Variables End
+
 # List of repositories
 repositories="\
 deb http://deb.debian.org/debian bullseye main contrib non-free
@@ -38,6 +53,10 @@ sudo bash -c 'echo "greeter-hide-users=false" >> /usr/share/lightdm/lightdm.conf
 # Theming Terminator
 cat terminatorUI.txt >> ~/.bashrc
 
+# Copying file sharing config file and restarting the daemon
+cp -avrf vsftpd.conf /etc/ &&
+sudo service vsftpd restart
+
 # Removing bloatwares
 sudo apt-get -y purge --auto-remove empathy brasero sound-juicer totem pidgin firefox-esr gimp imagemagick-* hexchat firefox thunderbird chromium remmina #synaptic*
 
@@ -66,6 +85,10 @@ sudo apt-get -y purge --auto-remove gnome-2048 aisleriot atomix gnome-chess five
 # sudo apt-get -y update
 # sudo apt-get install -y code
 
+mkdir -p test
+cd test
+# svn checkout --username $uname --password $pwd https://dev.aahlaad.com:8443/svn/SaarathyGUI/
 
+cd test/SaarathyGUI
 
 echo "success"
